@@ -7,9 +7,9 @@ function Nav(props) {
     console.log('props on nav', props)
     if(props.location.pathname !== '/') {
         return(
-            <div>
+            <div className='Nav'>
                 <h1>Nav</h1>
-                {props.profilePic}
+                <img src="https://robohash.org/YOUR-TEXT.png?size=100x100" alt=''/>
                 {props.username}
                 <Link to='/dashboard' >
                     <button>Home</button>

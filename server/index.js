@@ -18,6 +18,8 @@ massive(process.env.CONNECTION_STRING).then(dbInstance => {
 
 app.post('/api/auth/register', controller.register)
 app.post('/api/auth/login', controller.login)
+app.get('/api/posts/:userid', controller.getPosts)
+app.post('/api/post/:userid', controller.createPost)
 
 
 app.listen(4000, () => {

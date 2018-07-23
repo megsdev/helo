@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import axios from 'axios'
 
 const BASE_URL = 'http://localhost:4000'
@@ -22,7 +21,7 @@ class Dashboard extends Component {
 
     //get all posts from db
     getPosts = () => {
-        let url = BASE_URL + '/api/posts/' + this.props.id
+        let url = BASE_URL + '/api/posts'
         if ( this.state.search && this.state.userposts) {
             url += '?search=' + this.state.search + '&userposts=' + this.state.userposts
         }
@@ -108,10 +107,4 @@ class Dashboard extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    const { id } = state
-
-    return { id }
-}
-
-export default connect(mapStateToProps)(Dashboard)
+export default Dashboard

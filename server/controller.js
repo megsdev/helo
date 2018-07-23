@@ -4,7 +4,11 @@ module.exports = {
         const { username, password } = req.body;
 
         dbInstance.create_user([username, password])
-        .then( user => res.status(200).send(user))
+        .then( user => {
+            req.session.userid = user[0].id;
+            console.log(req.session.userid)
+            res.status(200).send(user)
+        })
         .catch(error => {
             res.status(500).send({errorMessage: 'something went wrong'})
             console.log('error', error)
@@ -18,7 +22,9 @@ module.exports = {
         dbInstance.login([username, password])
         .then(user => {
             if(user.length) {
-            res.status(200).send(user)
+                req.session.userid = user[0].id;
+                console.log(req.session.userid)
+                res.status(200).send(user)
         } else {
             res.status(200).send('not found')
         }
@@ -29,11 +35,16 @@ module.exports = {
         })
     },
 
+    logout: (req, res, next) => {
+        req.session.destroy();
+        res.status(200).send(req.session)
+    },
+
     getPosts: (req, res, next) => {
         const dbInstance = req.app.get('db')
         let { userposts, search } = req.query;
         if(!search) search = ''
-        const { userId } = req.params; 
+        const { userId } = req.session.userid; 
 
         dbInstance.get_posts()
             .then(posts => {
@@ -61,7 +72,7 @@ module.exports = {
     createPost: (req, res, next) => {
         const dbInstance = req.app.get('db')
         const { title, img, content } = req.body
-        const { userId } = req.params.userid;
+        const { userId } = req.session.userid;
 
         dbInstance.create_post([ title, img, content, userId ])
             .then(res.sendStatus(200))
@@ -69,5 +80,9 @@ module.exports = {
                 res.status(500).send({errorMessage: 'something went wrong'})
                 console.log('error', error)
             })
+    }, 
+
+    me: (req, res, next) => {
+        //query db for username and profile pic using userid stored in session and send back
     }
 }

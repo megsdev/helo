@@ -1,5 +1,4 @@
 const initialState = {
-    id: 0,
     username: '',
     profilePic: ''
 }
@@ -10,7 +9,7 @@ function reducer( state = initialState, action) {
     console.log('this is action.payload', action.payload)
     switch(action.type) {
         case UPDATE_USER_INFO:
-            return Object.assign( {}, state, {id: action.payload.id, username: action.payload.username, profilePic: action.payload.profilePic})        
+            return Object.assign( {}, state, {username: action.payload.username, profilePic: action.payload.profilePic})        
         default: return state
 
     }
@@ -18,10 +17,10 @@ function reducer( state = initialState, action) {
 
 
 //action builders
-export function updateUserInfo( id, username, profilePic ) {
+export function updateUserInfo( username, profilePic ) {
     return {
         type: UPDATE_USER_INFO,
-        payload: { id, username, profilePic }
+        payload: { username, profilePic }
     }
 }
 

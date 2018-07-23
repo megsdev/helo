@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import axios from 'axios'
 
 const BASE_URL = 'http://localhost:4000'
@@ -30,7 +29,7 @@ class Form extends Component {
     createPost = () => {
         axios({
             method: 'POST',
-            url: BASE_URL + '/api/post/' + this.props.id,
+            url: BASE_URL + '/api/post',
             data: this.state
         }).then(() => {
             this.props.history.push('/dashboard')
@@ -74,10 +73,4 @@ class Form extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    const { id } = state
-
-    return { id }
-}
-
-export default connect(mapStateToProps)(Form)
+export default Form
